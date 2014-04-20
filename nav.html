@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" media="screen" />
+    <title>导航 via:juking</title>
+	<!--[if IE]><script src="javascripts/html5.js"></script>
+	<![endif]-->
+    <style>
+        div {
+            position: absolute;
+            left: 90px;
+        }
+
+        input {
+            width: 250px;
+            height: 30px;
+            box-shadow: 1px 1px 3px;
+            padding: 4px 9px 4px 7px;
+        }
+    </style>
+    <script type="text/javascript">
+        function butOnClick(arg) {
+            if (event.keyCode != 13) {
+                var allText = document.getElementsByTagName("input");
+                for (var i = 0; i < allText.length; i++) {
+                    if (allText[i].id != arg.id && allText[i].value != "") {
+                        allText[i].value = "";
+                    }
+                }
+            }
+            else {
+                
+                if (arg.value == "")
+                    return false;
+                var loc = "";
+                if (arg.id == "kwBD") {
+                    loc = 'http://www.baidu.com/s?wd=' + (arg.value);
+                }
+                else if (arg.id == "kwGoogle") {
+                    loc = 'http://www.google.com.hk/#newwindow=1&safe=strict&q=' + (arg.value);
+                }
+                else if (arg.id == "kwBing") {
+                    loc = 'http://cn.bing.com/search?&qs=ED&form=QBLH&pq=a&sc=8-1&sp=1&q=' + (arg.value);
+                }
+                else if (arg.id == "kwYinYueTai") {
+                    loc = 'http://so.yinyuetai.com/mv?keyword=' + (arg.value);
+                }
+                else if (arg.id == "kwBDPan") {
+                     loc = 'http://www.baidu.com/s?wd=' + (arg.value)+'%20site:pan.baidu.com';
+                }
+                window.open(loc, "newwindow");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body style="background: url(images/bg.jpg) no-repeat">
+
+    <div id="Div0" style="top: 150px;">
+        <input tabindex="1" id="kwBD" type="search" placeholder="百度" autocomplete="off" onkeydown="javascrip:butOnClick(this);" />
+    </div>
+
+    <div id="Div1" style="top: 190px;">
+        <input tabindex="2" id="kwBing" type="search" placeholder="Bing" autocomplete="off" onkeydown="javascrip:butOnClick(this);" />
+    </div>
+
+    <div id="Div2" style="top: 230px;">
+        <input tabindex="3"  id="kwGoogle" type="search" placeholder="Google" autocomplete="off" onkeydown="javascrip:butOnClick(this);" />
+    </div>
+
+    <div id="Div3" style="top: 270px;">
+        <input  tabindex="4"  id="kwYinYueTai" type="search" placeholder="音悦Tai" autocomplete="off" onkeydown="javascrip:butOnClick(this);" />
+    </div>
+
+    <div id="Div4" style="top: 310px;">
+        <input  tabindex="4"  id="kwBDPan" type="search" placeholder="百度云盘" autocomplete="off" onkeydown="javascrip:butOnClick(this);" />
+    </div>
+
+</body>
+</html>
+<script src="javascripts/jquery-1.8.2.js"></script>
+<script type="text/javascript">
+   
+</script>
