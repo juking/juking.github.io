@@ -40,6 +40,5 @@ $(function () {
             //    if (id != this.id) $(this).val("");
             //});
         }
-        return false;
     }
 });
