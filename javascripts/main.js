@@ -35,10 +35,10 @@ $(function () {
             window.open(loc, "newwindow");
 
         } else {
-            var id = this.id;
-            $('input').each(function () {
-                if (id != this.id) $(this).val("");
-            });
+            //var id = this.id;
+            //$('input').each(function () {
+            //    if (id != this.id) $(this).val("");
+            //});
         }
         return false;
     }
