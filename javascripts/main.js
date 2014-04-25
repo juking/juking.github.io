@@ -26,6 +26,9 @@ $(function () {
                 case "kwBDPan":
                     loc = 'http://www.baidu.com/s?wd=' + (this.value) + '%20site:pan.baidu.com';
                     break;
+                case "kwAcf":
+                    loc = 'http://www.baidu.com/s?wd=' + (this.value) + '%20site:acfun.com';
+                    break;
                 default:
                     return false;
             }
