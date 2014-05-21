@@ -1,7 +1,7 @@
 $(function () {
 	if(!"placeholder" in document.createElement("input")){
 	    $.getScript("javascripts/jquery.placeholder.js",function(){
-	       $('input[placeholder][type=text]').placeholder();
+	       $('input[type=text]').placeholder();
 	    })
 	}
     $("input").bind("keydown", keySearch)
