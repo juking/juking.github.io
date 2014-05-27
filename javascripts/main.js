@@ -34,10 +34,13 @@ $(function () {
                 case "kwAcf":
                     loc = 'http://www.baidu.com/s?wd=' + (this.value) + '%20site:acfun.com';
                     break;
+                case "kwblog":
+                    loc = 'http://www.baidu.com/s?wd=' + (this.value) + '%20site:cnblogs.com';
+                    break;
                 default:
                     return false;
             }
-            window.open(loc, "newwindow");
+            window.open(loc,"","newwindow");
 
         } else {
             var id = this.id;
