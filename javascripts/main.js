@@ -40,7 +40,7 @@ $(function () {
                 default:
                     return false;
             }
-            window.open(loc,"newtab");
+            window.open(loc,"","newtab");
 
         } else {
             var id = this.id;
