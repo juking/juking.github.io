@@ -29,18 +29,18 @@ $(function () {
                     loc = 'http://so.yinyuetai.com/mv?keyword=' + (this.value);
                     break;
                 case "kwBDPan":
-                    loc = 'http://www.baidu.com/s?wd=' + (this.value) + '%20site:pan.baidu.com';
+                    loc = 'http://www.baidu.com/s?word=' + (this.value) + '&tn=bds&cl=3&ct=2097152&si=pan.baidu.com&s=on';
                     break;
                 case "kwAcf":
-                    loc = 'http://www.baidu.com/s?wd=' + (this.value) + '%20site:acfun.com';
+                    loc = 'http://www.baidu.com/s?wd=' + (this.value) + '&tn=bds&cl=3&ct=2097152&si=acfun.com&s=on';
                     break;
                 case "kwblog":
-                    loc = 'http://www.baidu.com/s?wd=' + (this.value) + '%20site:cnblogs.com';
+                    loc = 'http://www.baidu.com/s?wd=' + (this.value) + '&tn=bds&cl=3&ct=2097152&si=cnblogs.com&s=on';
                     break;
                 default:
                     return false;
             }
-            window.open(loc,"newtab");
+            window.open(loc);
 
         } else {
             var id = this.id;
