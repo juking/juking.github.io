@@ -1,42 +1,92 @@
-(function () {
-	if (!document.domain) {
-		alert("你拖到书签栏使用了么？书签栏应该是在浏览器地址栏下方的位置。如果你确定你是在书签栏使用的，那么可能你的浏览器太辣鸡（比如360），换个现代的浏览器吧（火狐、谷歌、IE11都行的）");
-		return
-	}
-	if (document.domain.toLowerCase().indexOf("talkshowcn.com") > 0) {
-		alert("你应该是加到收藏夹或者拖到书签栏，而不是点我");
-		return
-	}
-	if (document.domain.toLowerCase().indexOf("acfun.tv") < 0) {
-		alert("进AcFun再说...");
-		return
-	}
-	$.info("AcFun Fix: 欢迎使用 AcFun Fix 2013.10.14 E-mail:cctvyay@163.com");
-	v = $("a.active").attr("data-vid");
-	$.info("success::AcFun Fix: 修正播放器");
-	player = document.getElementById("ACFlashPlayer-re");
-	player.outerHTML = '<object style="visibility:visible;width:100%;height:100%" id="not-ACFlashPlayer-re" data="https://ssl.acfun.tv/flash/player-view-homura.swf" src="https://ssl.acfun.tv/flash/player-view-homura.swf" allowscriptaccess="always" allowfullscreen="true" allowfullscreeninteractive="true" wmode="direct" type="application/x-shockwave-flash"><param value="direct" name="wmode"><param value="true" name="allowFullscreenInteractive"><param value="true" name="allowfullscreen"><param value="always" name="allowscriptaccess"><param value="oldcs=1&host=http://www.acfun.tv&hint=提示: 将代码保存为书签访问更方便~&vid=' + v + '" name="flashvars"><param name=movie value="https://ssl.acfun.tv/flash/player-view-homura.swf"></object>';
-	sourceList = {
-		"sina" : "新浪视频",
-		"youku" : "优酷网",
-		"tudou" : "土豆网",
-		"qq" : "腾讯视频",
-		"pps" : "PPS.tv",
-		"ku6" : "酷六网",
-		"letv" : "乐视云",
-		"sohu" : "搜狐视频",
-		"iqiyi" : "爱奇艺",
-		"56" : "56网",
-		"PPTV" : "PPTV"
+ (function() {
+ 	if (!document.domain) {
+ 		alert("你拖到书签栏使用了么？书签栏应该是在浏览器地址栏下方的位置。如果你确定你是在书签栏使用的，那么可能你的浏览器太辣鸡（比如360），换个现代的浏览器吧（火狐、谷歌、IE11都行的）");
+ 		return
+ 	}
+ 	if (document.domain.toLowerCase().indexOf("talkshowcn.com") > 0) {
+ 		alert("你应该是加到收藏夹或者拖到书签栏，而不是点我");
+ 		return
+ 	}
+ 	if (document.domain.toLowerCase().indexOf("acfun.tv") < 0 && document.domain.toLowerCase().indexOf("bilibili.com") < 0) {
+ 		alert("进AcFun再说...");
+ 		return
+ 	}
+ 	var b = $("a.active.primary").data("from");
+ 	window._getPlayer = function() {
+ 		return document.getElementById("ACFlashPlayer-re") ? document.getElementById("ACFlashPlayer-re") : (document.getElementById("not-ACFlashPlayer-re") ? document.getElementById("not-ACFlashPlayer-re") : document.getElementById("area-player"));
+ 	};
+ 	window.c = function(d, e) {
+ 		player = _getPlayer();
+ 		if (player.id == 'area-player') {
+ 			$(player).html('<div class="inner ui-draggable"><iframe id="ACFlashPlayer-re" ></iframe></div>');
+ 			player = document.getElementById("ACFlashPlayer-re");
+ 		};
+ 		player.outerHTML = '<object style="visibility:visible;width:100%;height:100%" id="not-ACFlashPlayer-re" data="' + d + '" src="' + d + '" allowscriptaccess="always" allowfullscreen="true" allowfullscreeninteractive="true" type="application/x-shockwave-flash"><param value="true" name="allowFullscreenInteractive"><param value="true" name="allowfullscreen"><param value="always" name="allowscriptaccess"><param value="' + e + '" name="flashvars"><param name=movie value="' + d + '"></object>'
+ 	};
+ 	if (!document.getElementById("video-download") && b != "iqiyi" && b != "pps") {
+ 		$("#txt-title-view").append('<span id="video-download"><a class="btn primary" href="http://www.talkshowcn.com/page/acfun_danmu.html?vid='+$("a.active.primary").data("vid")+'&p='+(location.href.match(/_(\d+)/)?location.href.match(/_(\d+)/)[1]:"1")+'" title="视频下载" style="float:none;color:#fff;margin-left:8px;" target="_blank"><i class="icon icon-download"></i>详细信息及下载</a></span>')
+ 	}
+ 	if (b == "youku2") {
+ 		b = "youku"
+ 	}
+ 	if (b == "qq2") {
+ 		b = "qq"
+ 	}
+ 	sourceList = {
+ 		"sina": "新浪视频",
+ 		"youku": "优酷网",
+ 		"tudou": "土豆网",
+ 		"qq": "腾讯视频",
+ 		"pps": "PPS.tv",
+ 		"ku6": "酷六网",
+ 		"letv": "乐视云",
+ 		"letv2": "乐视网",
+ 		"sohu": "搜狐视频",
+ 		"iqiyi": "爱奇艺",
+ 		"56": "56网",
+ 		"pptv": "PPTV"
+ 	};
+	if(typeof(sourceList[b]) == "undefined"){
+		$.ajax({
+			url: "http://www.acfun.tv/video/getVideo.aspx?id="+$("a.active.primary").data("vid"),
+			async: false,
+			success:function(data){
+				$("a.active.primary").data("from",data.sourceType);
+				$("a.active.primary").data("sid",data.sourceId);
+				b = data.sourceType;
+			}
+		});
 	};
-	$.get("/video/getVideo.aspx?id=" + v, function (e) {
-		var data = eval(e);
-		$.info("AcFun Fix: 视频videoId: " + v + ", 视频来源: " + sourceList[data.sourceType] + ", 视频sourceId: " + data.sourceId);
-		if (!document.getElementById("video-download")) {
-			$("#txt-info-title").parent().append('<a id="video-download" href="http://www.flv.cn/?url=' + location.href + '" style="color:red;" target="_blank">下载视频</a>')
+ 	if (b != "letv") {
+		if(b == "iqiyi"||b == "pps"){
+			$.info("由于一些版权方面的原因，爱奇艺源停止替换播放器。请各位理解。");
+		}else{
+			c("http://static.skydust.net/private/acfun/AcPlayer201412121_D.swf", "oldcs=1&host=http://www.talkshowcn.com&vid=" + $("a.active.primary").data("vid") + "|" + b + "|" + $("a.active.primary").data("sid"));
+			$("#video-download").append('<a class="btn primary" onclick="$(_getPlayer()).prop(\'outerHTML\',$(_getPlayer()).prop(\'outerHTML\').replace(/acfun.tv/,\'talkshowcn.com\'))" style="float:none;color:#fff;margin-left:8px;" target="_blank"><i class="icon icon-refresh"></i>若解析失败点这儿刷新几次</a>');
+			$.info("视频源类型：" + sourceList[b]);
 		}
-		if (data.sourceType == "sina") {
-			$.info("error::AcFun Fix: 视频是新浪源视频，可能无法播放，希望你能帮忙补档，视频下载链接已放置到“举报视频”右侧。")
-		}
-	})
-})();
+ 	}else{
+		$.info("乐视云源本程序不会进行任何处理，出现问题是 AcFun 的问题，请联系客服。");
+	}
+ 	window.setCookie = function(d, f) {
+ 		var e = 365;
+ 		var g = new Date();
+ 		g.setTime(g.getTime() + e * 24 * 60 * 60 * 1000);
+ 		document.cookie = d + "=" + escape(f) + ";expires=" + g.toGMTString()
+ 	};
+
+ 	function a(e) {
+ 		var d, f = new RegExp("(^| )" + e + "=([^;]*)(;|$)");
+ 		if (d = document.cookie.match(f)) {
+ 			return unescape(d[2])
+ 		} else {
+ 			return null
+ 		}
+ 	}
+ 	if (!document.getElementById("keroom")) {
+ 		$(document.body).append('<div id="keroom" style="position:fixed;width:490px;right:0;bottom:0;"><div style="width:490px;"><a id="hideroom" class="r btn primary" onclick="$(\'.keframe\').toggle();if($(this).html()==\'收起聊天室\'){$(this).html(\'使用交流~\');setCookie(\'nokeroom\',1);}else{$(this).html(\'收起聊天室\');setCookie(\'nokeroom\',0);}">收起聊天室</a></div><iframe src="http://kekeke.cc/acfunfix" style="width:800px;height:380px;" class="keframe"></iframe></div>');
+ 		if (a("nokeroom") == 1) {
+ 			$("#hideroom").click()
+ 		}
+ 	};
+ })();
